@@ -12,17 +12,23 @@ use crate::{
 };
 
 pub fn construct_data_dir_paths(custom_data_dir: Option<PathBuf>) -> Result<Paths> {
-    let default_data_dir = dirs::data_dir()
-        .context("Failed to determine path to the user's data directory")?
-        .join("crony");
-
-    let data_dir = custom_data_dir.unwrap_or(default_data_dir);
+    let data_dir = custom_data_dir.unwrap_or(PathBuf::from("/etc/crony"));
+    let logs_dir = PathBuf::from("/logs/system/crony");
+    let run_dir = PathBuf::from("/run/crony");
 
     if !data_dir.is_dir() {
         fs::create_dir_all(&data_dir).context("Failed to create the data directory")?;
     }
 
-    let paths = Paths::new(data_dir);
+    if (!logs_dir.is_dir()) {
+        fs::create_dir_all(&logs_dir).context("Failed to create the logs directory")?;
+    }
+
+    if (!run_dir.is_dir()) {
+        fs::create_dir_all(&run_dir).context("Failed to create the run directory")?;
+    }
+
+    let paths = Paths::new(data_dir, logs_dir, run_dir);
 
     ensure_data_dirs_exist(&paths)?;
 
