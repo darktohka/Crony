@@ -20,11 +20,11 @@ pub fn construct_data_dir_paths(custom_data_dir: Option<PathBuf>) -> Result<Path
         fs::create_dir_all(&data_dir).context("Failed to create the data directory")?;
     }
 
-    if (!logs_dir.is_dir()) {
+    if !logs_dir.is_dir() {
         fs::create_dir_all(&logs_dir).context("Failed to create the logs directory")?;
     }
 
-    if (!run_dir.is_dir()) {
+    if !run_dir.is_dir() {
         fs::create_dir_all(&run_dir).context("Failed to create the run directory")?;
     }
 

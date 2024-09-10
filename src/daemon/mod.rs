@@ -5,7 +5,6 @@ mod start;
 
 pub use client::*;
 pub use cmd::*;
-pub use service::daemon::{Client, RequestContent, ResponseContent};
 pub use service::*;
 pub use start::*;
 
